@@ -43,6 +43,7 @@ $.ADOBE = (function(exports) {
 		return false;
 	}
 
+
 	if (app.name == "Adobe Illustrator") {
 
 		exports.importFile = function(path) {
@@ -95,6 +96,7 @@ $.ADOBE = (function(exports) {
 				opts.alphaChannels = true;
 				opts.layers = true;
 				var doc = app.activeDocument;
+
 				doc.saveAs(file);
 			}
 		}
@@ -120,7 +122,32 @@ $.ADOBE = (function(exports) {
 			"COMP":ImportAsType.COMP,
 			"LAYER":ImportAsType.COMP_CROPPED_LAYERS,
 			"FOOTAGE":ImportAsType.FOOTAGE,
-			"PROJECT": ImportAsType.PROJECT};
+			"PROJECT": ImportAsType.PROJECT
+		};	
+
+
+		exports.importSequence = function(path) {
+
+
+			var io = new ImportOptions(File(path));
+			
+			if (io.canImportAs(ImportAsType.FOOTAGE)){
+
+	 			io.importAs = ImportAsType.FOOTAGE;
+				// if your footage is an image-sequence:             
+	     		io.sequence = true;
+	     		io.forceAlphabetical = true;
+	     	}
+	     	tiffseq = app.project.importFile(io);    
+	     	tiffseq.name = "My automatically imported foorage";
+	                   
+	     	theComp = app.project.activeItem;  //currently selected composition(example)
+	     	if(theComp){
+	     		theComp.layers.add(tiffseq);
+	     	}
+		}
+
+
 
 		exports.importAEFile = function(path, type) {
 			var fileImport = new ImportOptions();
@@ -141,6 +168,7 @@ $.ADOBE = (function(exports) {
 		exports.saveActiveDocumentToPath = function(path) {
 			var file = new File(path);
 			app.project.save(file);
+			// app.project.renderQueue.item(1).outputModule(1).applyTemplate('mp3')
 		}
 
 		exports.getActiveFilename = function() {

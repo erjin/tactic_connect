@@ -64,6 +64,7 @@ var AdobeDOMBridge = (function(exports) {
 
 	exports.saveActiveDocumentToPath = function(path, opts, callback) {
 		console.log(path);
+		console.log("adobe")
 		callExtendScript('$.ADOBE.saveActiveDocumentToPath', path, callback);
 	}
 
@@ -75,6 +76,10 @@ var AdobeDOMBridge = (function(exports) {
 	exports.getActiveFilePath = function(callback) {
 		var fileuri = callExtendScript('$.ADOBE.getActiveFilePath', callback);
 		return fileuri;
+	}
+
+	exports.importSequence = function(path, callback) {
+		callExtendScript('$.ADOBE.importSequence', path, callback);
 	}
 
 

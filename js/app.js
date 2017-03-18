@@ -19,7 +19,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 $(document).ready(function() {
-
+	
 	function loadLoginScreen(p) {
 		var loginScreenScript = $("#login_screen").html();
 		var loginScreenTemplate = Handlebars.compile(loginScreenScript);
@@ -130,7 +130,15 @@ $(document).ready(function() {
 		return buttons;
 	}
 
+	function pad(n, width, z) {
+		z = z || '0';
+		n = n + '';
+		return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+	}
+
 	function clickAddButton(button_class, file) {
+
+		alert(button_class);
 		if (button_class === "add") {
 			AdobeDOMBridge.importFile(file);
 		} else if (button_class === "comp") {
@@ -138,7 +146,15 @@ $(document).ready(function() {
 		} else if (button_class === "layer") {
 			AdobeDOMBridge.importAEFile(file, "LAYER");
 		} else if (button_class === "footage") {
-			AdobeDOMBridge.importAEFile(file, "FOOTAGE");
+			if (file.indexOf("#") != -1) {
+
+				var padding = file.lastIndexOf("#") - file.indexOf("#") + 1 
+				file=file.replace(pad("#",padding,"#"),pad(1,padding))
+
+				AdobeDOMBridge.importSequence(file);
+			}else{
+				AdobeDOMBridge.importAEFile(file, "FOOTAGE");
+			}
 		} else if (button_class === "project") {
 			AdobeDOMBridge.importAEFile(file, "PROJECT");
 		} else if (button_class === "open") {
@@ -278,6 +294,35 @@ $(document).ready(function() {
 		// Toggle menu visibility
 		toggleMenu();
 	});
+
+	$("li#read").click(function(){
+		var path = "/tmp/test";
+		var result = window.cep.fs.readFile(path);
+		if (0 == result.err) {
+		      //success
+		     alert(result.data); //result.data is file content
+		}
+		else {
+		     alert("failed")
+		}
+	});
+
+	$("li#write").click(function(){
+		var data = "This is a test hahah hao.";
+		var path = "/tmp/test";
+		var result = window.cep.fs.writeFile(path, data);
+		if (0 == result.err) {
+		     alert("write")
+		}
+		else {
+		     alert("not write")
+		}
+	});
+
+	$("li#alert").click(function(){
+		alert("Testing...")
+	});
+
 
 	$(document).on("formLoadedEvent", function(event, obj) {
 		AdobeDOMBridge.getActiveFilename(function(res) {
