@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ExtensionList>
-	<Extension Id="com.TEGNA.TacticConnect.extension">
+	<Extension Id="com.moverocket.TacticConnect.extension">
 		<HostList>
 			<Host Name="AEFT" Port="8080" />
 			<Host Name="ILST" Port="8180" />
 			<Host Name="PHSP" Port="8280" />
+			<Host Name="PHXS" Port="8380" />
 		</HostList>
 	</Extension>
 </ExtensionList>
