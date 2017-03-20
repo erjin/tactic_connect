@@ -138,7 +138,6 @@ $(document).ready(function() {
 
 	function clickAddButton(button_class, file) {
 
-		alert(button_class);
 		if (button_class === "add") {
 			AdobeDOMBridge.importFile(file);
 		} else if (button_class === "comp") {

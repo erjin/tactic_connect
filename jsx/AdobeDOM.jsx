@@ -134,17 +134,12 @@ $.ADOBE = (function(exports) {
 			if (io.canImportAs(ImportAsType.FOOTAGE)){
 
 	 			io.importAs = ImportAsType.FOOTAGE;
-				// if your footage is an image-sequence:             
-	     		io.sequence = true;
-	     		io.forceAlphabetical = true;
-	     	}
-	     	tiffseq = app.project.importFile(io);    
-	     	tiffseq.name = "My automatically imported foorage";
-	                   
-	     	theComp = app.project.activeItem;  //currently selected composition(example)
-	     	if(theComp){
-	     		theComp.layers.add(tiffseq);
-	     	}
+				io.sequence = true;
+				io.forceAlphabetical = true;
+			}
+
+			seq = app.project.importFile(io);
+			seq.name = "Imported Sequence(s)";
 		}
 
 
