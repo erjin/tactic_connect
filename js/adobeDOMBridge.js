@@ -64,7 +64,6 @@ var AdobeDOMBridge = (function(exports) {
 
 	exports.saveActiveDocumentToPath = function(path, opts, callback) {
 		console.log(path);
-		console.log("adobe")
 		callExtendScript('$.ADOBE.saveActiveDocumentToPath', path, callback);
 	}
 
