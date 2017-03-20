@@ -294,34 +294,6 @@ $(document).ready(function() {
 		toggleMenu();
 	});
 
-	$("li#read").click(function(){
-		var path = "/tmp/test";
-		var result = window.cep.fs.readFile(path);
-		if (0 == result.err) {
-		      //success
-		     alert(result.data); //result.data is file content
-		}
-		else {
-		     alert("failed")
-		}
-	});
-
-	$("li#write").click(function(){
-		var data = "This is a test hahah hao.";
-		var path = "/tmp/test";
-		var result = window.cep.fs.writeFile(path, data);
-		if (0 == result.err) {
-		     alert("write")
-		}
-		else {
-		     alert("not write")
-		}
-	});
-
-	$("li#alert").click(function(){
-		alert("Testing...")
-	});
-
 
 	$(document).on("formLoadedEvent", function(event, obj) {
 		AdobeDOMBridge.getActiveFilename(function(res) {

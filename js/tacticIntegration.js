@@ -74,10 +74,8 @@ function TacticKeywordAssetSearch (server, searchterm) {
 		} else {
 			var sp = /,\s+/;
 			if (sp.test(searchterm) == true) {
-				var term = searchterm.replace(sp, " ");
-				asset_expr = "@SOBJECT(workflow/asset['name','@@','"+term+"']['keywords','@@','"+term+"'])";
-				// var term = searchterm.replace(sp, "|");
-				// asset_expr = "@SOBJECT(workflow/asset['name','EQI','"+term+"']['keywords','EQI','"+term+"'])";
+				var term = searchterm.replace(sp, "|");
+				asset_expr = "@SOBJECT(workflow/asset['name','EQI','"+term+"']['keywords','EQI','"+term+"'])";
 			} else {
 				asset_expr = "@SOBJECT(workflow/asset['begin']['keywords','EQI','"+searchterm+"']['name','EQI','"+searchterm+"']['or'])";
 			}
@@ -166,29 +164,16 @@ function TacticDeliverables (server, searchterm) {
 function TacticAsset(server, data, deliverable_code) {
 	data.status = "Verified";
 
-	// var file_range = "1-5/1";
- //    var name="abc.####.png";
-
-
 	// Strip asset_deliverable out of data
 	var asset = server.insert("workflow/asset", data);
 	// var snapshot = server.create_snapshot(asset.__search_key__, "publish/"+data.name, {snapshot_type: "sequence"});
 	var snapshot = server.create_snapshot(asset.__search_key__, "publish/"+data.name);
 	var path = server.get_preallocated_path(snapshot.code, {file_type: "main", file_name: data.name});
-	console.log("tacticasset");
-	console.log(path);
-
-
-  	// AdobeDOMBridge.getActiveFilename( function(documentName) {} )
-		
 	
 	path = path.replace("/home","/Volumes")
-    alert(path);
-    // path = "/tmp/";
 	var opts = "";
 	AdobeDOMBridge.saveActiveDocumentToPath(path, opts, function() {
 		server.add_file(snapshot.code, path, {file_type: "main", mode: "preallocate"});
-		// server.add_group(snapshot.code, path, {file_type: "main", mode: "preallocate", file_rang e: file_range});
 
 
 	}.bind(this));
@@ -228,12 +213,10 @@ function TacticAssetVersion(server) {
 						var snapshot = server.create_snapshot(asset.__search_key__, "publish/"+asset.name);
 						var path = server.get_preallocated_path(snapshot.code, {file_type: "main", file_name: asset.name});
 						path = path.replace("/home","/Volumes");
-// 						var path = "/tmp/"+asset.name
 						var opts = "";
 
 						AdobeDOMBridge.saveActiveDocumentToPath(path, opts, function() {
 							server.add_file(snapshot.code, path, {file_type: "main", mode: "preallocate"});
-// 							server.add_file(snapshot.code, path, {file_type: "main", mode: "upload"});
 							result = true;
 						}.bind(this));
 					}

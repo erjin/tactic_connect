@@ -163,7 +163,6 @@ $.ADOBE = (function(exports) {
 		exports.saveActiveDocumentToPath = function(path) {
 			var file = new File(path);
 			app.project.save(file);
-			// app.project.renderQueue.item(1).outputModule(1).applyTemplate('mp3')
 		}
 
 		exports.getActiveFilename = function() {
